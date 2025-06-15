@@ -19,22 +19,31 @@ export default defineEventHandler(async (event) => {
   }
 
   try {
-    // Update fields if provided
+    const { issueKey, fields, transitionId, comment } = await readBody(event)
+
+    // update fields
     if (fields) {
       await axios.put(
-        `https://${domain}/rest/api/3/issue/${issueKey}`,
+        `https://${config.jiraDomain}/rest/api/3/issue/${issueKey}`,
         { fields },
         { headers }
       )
     }
 
-    // Update status if transitionId is provided
+    // transition status
     if (transitionId) {
       await axios.post(
-        `https://${domain}/rest/api/3/issue/${issueKey}/transitions`,
-        {
-          transition: { id: transitionId }
-        },
+        `https://${config.jiraDomain}/rest/api/3/issue/${issueKey}/transitions`,
+        { transition: { id: transitionId } },
+        { headers }
+      )
+    }
+
+    // add comment
+    if (comment) {
+      await axios.post(
+        `https://${config.jiraDomain}/rest/api/3/issue/${issueKey}/comment`,
+        { body: comment },
         { headers }
       )
     }

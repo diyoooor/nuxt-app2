@@ -1,7 +1,7 @@
 <template>
-  <div class="bg-primary min-h-screen">
+  <div class="bg-[#F8F8F8] min-h-screen px-4">
     <AppHeader />
-    <main class="container mx-auto bg-primary">
+    <main class="container mx-auto py-4">
       <slot />
     </main>
     <AppFooter />
